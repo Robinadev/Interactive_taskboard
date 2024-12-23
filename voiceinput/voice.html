@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Input Taskboard</title>
+    <style>
+        .taskboard {
+            width: 50%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .tasks {
+            margin: 10px 0;
+        }
+        .task {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="taskboard">
+        <h2>Taskboard</h2>
+        <ul class="tasks" id="tasks"></ul>
+        <button id="start-voice">🎤 Add Task with Voice</button>
+        <p id="status">Click the button and speak your task.</p>
+    </div>
+
+    <script>
+        // Check if the browser supports speech recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            const status = document.getElementById("status");
+            const tasks = document.getElementById("tasks");
+
+            // Start voice recognition when button is clicked
+            document.getElementById("start-voice").addEventListener("click", () => {
+                recognition.start();
+                status.textContent = "Listening for your task...";
+            });
+
+            // Process the result when the user stops speaking
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const taskItem = document.createElement("li");
+                taskItem.className = "task";
+                taskItem.textContent = transcript;
+                tasks.appendChild(taskItem);
+                status.textContent = "Task added: " + transcript;
+            };
+
+            // Handle errors or when recognition ends
+            recognition.onerror = (event) => {
+                status.textContent = "Error occurred: " + event.error;
+            };
+
+            recognition.onend = () => {
+                status.textContent = "Click the button to add another task.";
+            };
+        } else {
+            document.getElementById("status").textContent =
+                "Sorry, your browser does not support voice recognition.";
+        }
+    </script>
+</body>
+</html>
