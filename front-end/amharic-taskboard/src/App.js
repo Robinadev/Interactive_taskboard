@@ -72,43 +72,100 @@ const App = () => {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Amharic Taskboard</h1>
-      <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#f0f8ff",
+        color: "#333",
+        padding: "20px",
+      }}
+    >
+      <h1 style={{ fontSize: "36px", marginBottom: "20px" }}>Amharic Taskboard</h1>
+      <div style={{ marginBottom: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
         <input
           type="text"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
           placeholder="የእርስዎን ተግባር ያስገቡ"
-          style={{ padding: "10px", fontSize: "16px", width: "300px" }}
-        />
-        <button onClick={addTask} style={{ marginLeft: "10px", padding: "10px" }}>
-          Add Task
-        </button>
-        <button
-          onClick={handleVoiceInput}
           style={{
-            marginLeft: "10px",
             padding: "10px",
-            backgroundColor: isListening ? "red" : "green",
-            color: "white",
+            fontSize: "16px",
+            width: "300px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            marginBottom: "10px",
           }}
-        >
-          🎤 {isListening ? "Listening..." : "Speak"}
-        </button>
+        />
+        <div>
+          <button
+            onClick={addTask}
+            style={{
+              padding: "10px 15px",
+              fontSize: "16px",
+              borderRadius: "5px",
+              border: "none",
+              backgroundColor: "#4caf50",
+              color: "white",
+              cursor: "pointer",
+              marginRight: "10px",
+            }}
+          >
+            Add Task
+          </button>
+          <button
+            onClick={handleVoiceInput}
+            style={{
+              padding: "10px 15px",
+              fontSize: "16px",
+              borderRadius: "5px",
+              border: "none",
+              backgroundColor: isListening ? "#f44336" : "#2196f3",
+              color: "white",
+              cursor: "pointer",
+            }}
+          >
+            🎤 {isListening ? "Listening..." : "Speak"}
+          </button>
+        </div>
       </div>
-      <ul style={{ marginTop: "20px" }}>
+      <ul
+        style={{
+          listStyle: "none",
+          padding: 0,
+          width: "100%",
+          maxWidth: "400px",
+          textAlign: "center",
+        }}
+      >
         {tasks.map((task) => (
-          <li key={task.id} style={{ margin: "10px 0", fontSize: "18px" }}>
-            {task.task}
+          <li
+            key={task.id}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "10px 15px",
+              margin: "10px 0",
+              backgroundColor: "#ffffff",
+              borderRadius: "5px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <span>{task.task}</span>
             <button
               onClick={() => deleteTask(task.id)}
               style={{
-                marginLeft: "10px",
-                padding: "5px",
-                backgroundColor: "red",
-                color: "white",
+                padding: "5px 10px",
+                fontSize: "14px",
+                borderRadius: "5px",
                 border: "none",
+                backgroundColor: "#f44336",
+                color: "white",
                 cursor: "pointer",
               }}
             >
